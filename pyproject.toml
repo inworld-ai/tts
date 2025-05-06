@@ -1,0 +1,29 @@
+[project]
+name = "tts"
+dynamic = ['version']
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+]
+
+[project.optional-dependencies]
+dev = [
+    "google-crc32c>=1.7.1",
+    "hatch>=1.14.1",
+    "keyring>=25.6.0",
+    "keyrings-google-artifactregistry-auth>=1.1.2",
+    "pytest>=8.3.5",
+    "twine>=6.1.0",
+]
+
+
+[tool.hatch.build.targets.wheel]
+packages = ["tts"]
+
+[tool.hatch.version]
+path = "tts/__init__.py"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

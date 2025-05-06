@@ -1,0 +1,18 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1  # Use the latest stable version
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.7.2
+    hooks:
+      - id: ruff
+        types_or: [python, pyi]
+        args: [--fix]
+        exclude: ^(projects/template/|libs/template/)
+      - id: ruff-format
+        types_or: [python, pyi]
+        exclude: ^(projects/template/|libs/template/)
