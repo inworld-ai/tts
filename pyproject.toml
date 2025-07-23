@@ -1,0 +1,154 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "tts"
+dynamic = ["version"]
+description = "TTS: A neural text-to-speech system using frozen audio codecs and large language models"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Inworld AI", email = "opensource@inworld.ai"},
+]
+dependencies = [
+    # Core ML/AI frameworks
+    "torch",
+    "torchaudio",
+    "transformers",
+    "lightning",
+    # Training and optimization
+    "deepspeed==0.16.9",
+    "torchao",
+    "torchtune",
+    "trl==0.16.0",
+    "peft==0.15.2",
+    # Audio processing
+    "librosa",
+    "torchlibrosa",
+    "silero-vad",
+    # Data processing and utilities
+    "numpy",
+    "absl-py",
+    "cattrs",
+    "einops",
+    "regex",
+    "unidecode",
+    "ftfy",
+    "vector_quantize_pytorch",
+    # Language and text processing
+    "lingua-language-detector==2.0.2",
+    "faster-whisper",
+    "nemo_text_processing; sys_platform == 'linux'",
+    # ML utilities
+    "timm",
+    "wandb",
+    # UI and visualization
+    "gradio",
+    "matplotlib",
+    "progressbar==2.5",
+    "ratelimiter",
+    # API clients
+    "openai",
+    "google-genai",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = [
+    "tts",
+]
+
+[project.optional-dependencies]
+dev = [
+    "hatch>=1.14.1",
+    "pytest",
+    "pytest-cov",
+    "wheel",
+]
+
+# CUDA version extras - flash-attn installed separately via prebuild wheels
+cu124 = []  # CUDA 12.4 with PyTorch 2.6
+cu128 = []  # CUDA 12.8 with PyTorch 2.7
+
+[tool.uv.sources]
+# CUDA version selection using extras
+# Usage examples:
+#   uv sync --extra cu124  # for CUDA 12.4 (PyTorch 2.6)
+#   uv sync --extra cu128  # for CUDA 12.8 (PyTorch 2.7)
+# Defaults to CUDA 12.8 for Linux if no extra is specified
+torch = [
+    { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
+    { index = "pytorch-cuda-124", marker = "sys_platform == 'linux' and extra == 'cu124'" },
+    { index = "pytorch-cuda-128", marker = "sys_platform == 'linux' and extra != 'cu124'" },
+]
+
+torchaudio = [
+    { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
+    { index = "pytorch-cuda-124", marker = "sys_platform == 'linux' and extra == 'cu124'" },
+    { index = "pytorch-cuda-128", marker = "sys_platform == 'linux' and extra != 'cu124'" },
+]
+nemo_text_processing = [
+    { git = "https://github.com/NVIDIA/NeMo-text-processing.git", rev = "48ca992c755001de930d577e2dfd2eda17d871bc", marker = "sys_platform == 'linux'" },
+]
+
+# CPU index for Mac
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+# CUDA indexes for Linux - simplified to support only cu124 and cu128
+# Default: cu128 (PyTorch 2.7), Available: cu124 (PyTorch 2.6), cu128 (PyTorch 2.7)
+
+# CUDA 12.8 index for Linux (default) - PyTorch 2.7
+[[tool.uv.index]]
+name = "pytorch-cuda-128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
+# CUDA 12.4 index for Linux - PyTorch 2.6
+[[tool.uv.index]]
+name = "pytorch-cuda-124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[tool.hatch.version]
+path = "tts/__init__.py"
+
+[tool.ruff]
+# Adopt .style.yapf configuration
+line-length = 88
+indent-width = 4
+target-version = "py310"
+
+
+[tool.ruff.format]
+# Use Google-style formatting (similar to yapf's based_on_style = google)
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+skip-magic-trailing-comma = true
+
+[tool.ruff.lint]
+# Enable rules for better code quality and formatting consistency
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # flake8-bugbear
+    "C4",   # flake8-comprehensions
+    "UP",   # pyupgrade
+]
+exclude = ["tools"]
+per-file-ignores = { "tts/internal/eval/i18_prompts.py" = ["E501"] }
+
+[tool.ruff.lint.isort]
+# Configure import sorting to match yapf's style
+known-first-party = ["tts"]
+split-on-trailing-comma = false
+
+[tool.ruff.lint.pycodestyle]
+# Configure blank lines to match yapf settings
+max-line-length = 88
