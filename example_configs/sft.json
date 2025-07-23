@@ -1,0 +1,50 @@
+{
+    "training": {
+        "seed": 777,
+        "logging_steps": 150,
+        "eval_steps": 300,
+        "gradient_accumulation_steps": 1,
+        "gradient_clip_value": 1.0,
+        "learning_rate": 1e-04,
+        "betas": [
+            0.9,
+            0.95
+        ],
+        "warmup_ratio": 0.05,
+        "batch_size": 4,
+        "weight_decay": 0.1,
+        "precision": "bf16",
+        "strategy": "ddp",
+        "gradient_checkpointing": false,
+        "num_workers": 1
+    },
+    "modeling": {
+        "parameters": {
+            "codebook_size": 65536,
+            "max_seq_len": 2048,
+            "model_name": "meta-llama/Llama-3.2-1B-Instruct",
+            "enable_text_normalization": true
+        }
+    },
+    "checkpointing": {
+        "save_steps": 10000,
+        "collect_health_stats": false,
+        "save_intermediate_generations": true,
+        "only_load_model_weights": true,
+        "keep_only_last_n_checkpoints": 10,
+        "checkpoint_file_to_resume_from": "/path/to/your/checkpoint.pt"
+    },
+    "train_weighted_datasets": {
+        "/path/to/your/vectorized_dataset": 1.0
+    },
+    "val_weighted_datasets": {
+        "/path/to/your/vectorized_dataset": 1.0
+    },
+    "dataset": {
+        "randomize_slider": 0,
+        "allowed_languages": [],
+        "min_dnsmos_score": 0,
+        "min_sample_rate": 0,
+        "enable_rlhf_training": false
+    }
+}
