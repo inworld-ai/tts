@@ -12,21 +12,21 @@ from tts.data import data_utils, text_normalization
 from tts.inference import inferencing
 
 _DEFAULT_ENCODER_CHECKPOINT_PATH = (
-    "/inworld/tts/checkpoints/finch_codec/encoder/model.pt"
+    "/path/to/encoder.pt"
 )
 _DEFAULT_DECODER_CHECKPOINT_PATH = (
-    "/inworld/tts/checkpoints/finch_codec/48khz_pt32ft441_rms/final_model.pt"
+    "/path/to/decoder.pt"
 )
 _DEFAULT_PROMPT_WAVS = {
-    "/inworld/tts/prompts/libritts_175_young_female_2.wav": (
+    "/path/to/prompt.wav": (
         "It was extremely dark, this passage, after the blinding sunlight "
         "reflected from the sulfurous ground."
     ),
-    "/inworld/tts/prompts/voices_com/eric_carpenter_excited_1.wav": (
+    "/path/to/prompt2.wav": (
         "Unveiling our summer collection, dive into vibrant colors and "
         "unparalleled designs."
     ),
-    "/inworld/tts/prompts/angry_1.wav": "Dogs are sitting by the door.",
+    "/path/to/prompt3.wav": "Dogs are sitting by the door.",
 }
 
 _DEFAULT_PHRASES = [

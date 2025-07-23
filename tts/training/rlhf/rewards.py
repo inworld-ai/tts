@@ -18,10 +18,10 @@ from tts.inference import inferencing
 from tts.training.rlhf import ecapa_tdnn, reward_utils
 
 _DEFAULT_CODEC_CHECKPOINT_PATH = (
-    "/inworld/tts/checkpoints/finch_codec/48khz_pt32ft441_rms/final_model.pt"
+    "/path/to/decoder.pt"
 )
 _DEFAULT_SIM_CHECKPOINT_PATH = (
-    "/inworld/tts/evaluation/models/UniSpeech/wavlm_large_finetune.pth"
+    "/path/to/sim.pth"
 )
 
 
