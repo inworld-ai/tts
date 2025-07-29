@@ -10,16 +10,18 @@ import torchaudio
 import transformers
 import whisper
 from absl import logging
-from src import data_utils, inferencing
-from src.rlhf import ecapa_tdnn, reward_utils
-from tts_common import constants
-from tts_common.third_party.xcodec import decoding
+
+from tts.core import constants
+from tts.core.codec import decoding
+from tts.data import data_utils
+from tts.inference import inferencing
+from tts.training.rlhf import ecapa_tdnn, reward_utils
 
 _DEFAULT_CODEC_CHECKPOINT_PATH = (
-    "/inworld/tts/checkpoints/finch_codec/48khz_pt32ft441_rms/final_model.pt"
+    "/path/to/some-9a5f5d.pt"
 )
 _DEFAULT_SIM_CHECKPOINT_PATH = (
-    "/inworld/tts/evaluation/models/UniSpeech/wavlm_large_finetune.pth"
+    "/path/to/some-3aac85.pth"
 )
 
 

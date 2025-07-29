@@ -81,7 +81,6 @@ Process your raw audio dataset into a JSONL file where each line contains a samp
 
 ```json
 {
-  "speaker_id": "train-clean-360_2272",
   "transcript": "Then they would swiftly dart at their prey and bear it to the ground.",
   "language": "en",
   "wav_path": "/path/to/audio.wav",
@@ -99,12 +98,29 @@ Process your raw audio dataset into a JSONL file where each line contains a samp
 
 **Example dataset:** You can reference the [LibriTTS dataset](https://huggingface.co/datasets/mythicinfinity/libritts) which contains ~585 hours of English speech from 2, 456 speakers at 24kHz sampling rate.
 
-**Sample file:** See [ `./example/configs/samples.jsonl` ](./example/configs/samples.jsonl) for a demonstration file with 1000 samples showing the correct format (tiny subset for demonstration purposes only).
+**Sample files:** We provide real example data from LibriTTS in this repository:
+* [`./example/configs/samples.jsonl`](./example/configs/samples.jsonl) - 100 real LibriTTS samples with proper JSONL format
+* `./example/wavs/` - Corresponding audio files (audio_1.wav through audio_100.wav)
+
+This gives you a working example to test the data vectorization and training pipeline with actual audio data.
 
 ### 2. Data Vectorization
 
 Vectorize audio data using codec's encoder (We also made the codec compatible with [xcodec2](https://huggingface.co/HKUSTAudio/xcodec2/tree/main/ckpt), so you can use the publicly available checkpoint if you prefer not to train the codec from scratch):
 
+**Test with provided samples:**
+```bash
+WANDB_PROJECT="your_project" \
+torchrun --nproc_per_node 8 ./tools/data/data_vectorizer.py \
+    --codec_model_path=/path/to/codec/model.pt \
+    --batch_size=16 \
+    --dataset_path=./example/configs/samples.jsonl \
+    --output_dir=/path/to/output_directory \
+    --use_wandb \
+    --run_name=test_vectorization
+```
+
+**With your own dataset:**
 ```bash
 WANDB_PROJECT="your_project" \
 torchrun --nproc_per_node 8 ./tools/data/data_vectorizer.py \
@@ -192,6 +208,7 @@ Create training config ( `./example/configs/sft.json` ). Below shows key configu
 **Important**:
 * Update dataset paths to point to your vectorized data directory
 * This shows only key parameters - refer to `./example/configs/sft.json` for the complete configuration with all available options
+* To resume from a checkpoint: Add `"checkpoint_file_to_resume_from": "/path/to/your/checkpoint.pt"` to the `checkpointing` section
 
 ### 5. Training
 

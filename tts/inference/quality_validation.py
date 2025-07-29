@@ -11,8 +11,12 @@ from tts.core.codec import decoding, encoding
 from tts.data import data_utils, text_normalization
 from tts.inference import inferencing
 
-_DEFAULT_ENCODER_CHECKPOINT_PATH = "/path/to/some-982760.pt"
-_DEFAULT_DECODER_CHECKPOINT_PATH = "/path/to/some-9a5f5d.pt"
+_DEFAULT_ENCODER_CHECKPOINT_PATH = (
+    "/path/to/some-982760.pt"
+)
+_DEFAULT_DECODER_CHECKPOINT_PATH = (
+    "/path/to/some-9a5f5d.pt"
+)
 _DEFAULT_PROMPT_WAVS = {
     "/path/to/some-91f247.wav": (
         "It was extremely dark, this passage, after the blinding sunlight "
