@@ -5,7 +5,7 @@
 [![CUDA Support](https://img.shields.io/badge/CUDA-12.4%20%7C%2012.8-green.svg)](https://developer.nvidia.com/cuda-toolkit)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.6%20%7C%202.7-orange.svg)](https://pytorch.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Technical Report](https://img.shields.io/badge/Technical%20Report-PDF-red.svg)](./tech_report.pdf)
+[![ArXiv](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2507.21138)
 [![Playground](https://img.shields.io/badge/Playground-Try%20Now-blue.svg)](https://inworld.ai/tts)
 
 This repository contains the training and modeling code used to create [Inworld TTS-1 and TTS-1-Max models](https://inworld.ai/blog/introducing-inworld-tts).
@@ -16,7 +16,7 @@ You can use this code to pre-train, fine-tune, or align with RL your arbitrary S
 
 * [Playground](https://inworld.ai/tts)
 * [Examples](https://inworld-ai.github.io/tts/)
-* [Technical Report](./tech_report.pdf)
+* [Technical Report](https://arxiv.org/abs/2507.21138)
 
 ## TTS Trainer Features
 
