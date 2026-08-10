@@ -123,7 +123,6 @@ def run_training(
         repetition_penalty=config.rlhf_training.repetition_penalty,
         temperature=config.rlhf_training.temperature,
         num_generations=config.rlhf_training.num_generations,
-        max_prompt_length=config.rlhf_training.max_prompt_length,
         max_completion_length=config.rlhf_training.max_completion_length,
         per_device_train_batch_size=config.rlhf_training.per_device_train_batch_size,
         reward_weights=config.rlhf_training.reward_weights,

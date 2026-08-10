@@ -280,7 +280,6 @@ Create an RLHF training config (`./example/configs/rlhf.json`). Key sections inc
         "repetition_penalty": 1.1,
         "temperature": 1.1,
         "num_generations": 8,
-        "max_prompt_length": 1024,
         "max_completion_length": 1024,
         "min_completion_length": 25,
         "use_vllm": true,
