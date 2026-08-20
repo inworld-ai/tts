@@ -163,10 +163,6 @@ class RLHFConfig:
     # Number of generations per prompt to sample.
     num_generations: int
 
-    # Maximum length of the prompt. If the prompt is longer than this value, it
-    # will be truncated left.
-    max_prompt_length: int
-
     # Maximum length of the generated completion.
     max_completion_length: int
 
