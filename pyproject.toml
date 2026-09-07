@@ -16,7 +16,7 @@ dependencies = [
     # Core ML/AI frameworks
     "torch",
     "torchaudio",
-    "transformers==5.5.0",
+    "transformers==5.10.1",
     "lightning",
     # Training and optimization
     "deepspeed==0.16.9",
