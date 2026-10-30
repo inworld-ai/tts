@@ -113,25 +113,30 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     INSTALL_CMD="uv pip install -e ."
 else
 
-    # Map CUDA version to extra (simplified to cu124 and cu128 only)
+    # Map CUDA version to extra (simplified to cu124 and cu128 only).
+    # TORCH_PIN must match the flash-attn wheel's torch tag (Step 4): this
+    # install path does not read uv.lock, so torch would otherwise float.
     case "$CUDA_VERSION" in
         "12.4")
             CUDA_EXTRA="cu124"
             TORCH_VERSION="2.6"
+            TORCH_PIN="2.6.0"
             ;;
         "12.8")
             CUDA_EXTRA="cu128"
             TORCH_VERSION="2.7"
+            TORCH_PIN="2.7.1"
             ;;
         *)
             log_warning "Unsupported CUDA version: $CUDA_VERSION. Only CUDA 12.4 and 12.8 are supported. Defaulting to CUDA 12.8"
             CUDA_EXTRA="cu128"
             TORCH_VERSION="2.7"
+            TORCH_PIN="2.7.1"
             ;;
     esac
 
-    log_info "Installing project dependencies with CUDA extra: $CUDA_EXTRA..."
-    INSTALL_CMD="uv pip install -e .[$CUDA_EXTRA]"
+    log_info "Installing project dependencies with CUDA extra: $CUDA_EXTRA (torch $TORCH_PIN)..."
+    INSTALL_CMD="uv pip install -e .[$CUDA_EXTRA] torch==$TORCH_PIN torchaudio==$TORCH_PIN"
 fi
 
 if $INSTALL_CMD; then
