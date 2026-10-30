@@ -62,6 +62,8 @@ command_exists() {
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 VENV_PATH="$PROJECT_ROOT/.venv"
+# Python minor version for the venv; also selects the cp tag of the flash-attn wheel
+PYTHON_VERSION="3.11"
 
 log_header "Starting tts-core setup..."
 echo -e "${FOLDER} Working in: $PROJECT_ROOT"
@@ -93,9 +95,9 @@ else
     log_info "No existing .venv found"
 fi
 
-# Step 2: Create new virtual environment with Python 3.10
-log_info "Creating virtual environment with Python 3.10..."
-if uv venv --python 3.10; then
+# Step 2: Create new virtual environment with Python 3.11
+log_info "Creating virtual environment with Python $PYTHON_VERSION..."
+if uv venv --python "$PYTHON_VERSION"; then
     log_success "Virtual environment created successfully"
 else
     log_error "Failed to create virtual environment"
@@ -111,25 +113,30 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     INSTALL_CMD="uv pip install -e ."
 else
 
-    # Map CUDA version to extra (simplified to cu124 and cu128 only)
+    # Map CUDA version to extra (simplified to cu124 and cu128 only).
+    # TORCH_PIN must match the flash-attn wheel's torch tag (Step 4): this
+    # install path does not read uv.lock, so torch would otherwise float.
     case "$CUDA_VERSION" in
         "12.4")
             CUDA_EXTRA="cu124"
             TORCH_VERSION="2.6"
+            TORCH_PIN="2.6.0"
             ;;
         "12.8")
             CUDA_EXTRA="cu128"
             TORCH_VERSION="2.7"
+            TORCH_PIN="2.7.1"
             ;;
         *)
             log_warning "Unsupported CUDA version: $CUDA_VERSION. Only CUDA 12.4 and 12.8 are supported. Defaulting to CUDA 12.8"
             CUDA_EXTRA="cu128"
             TORCH_VERSION="2.7"
+            TORCH_PIN="2.7.1"
             ;;
     esac
 
-    log_info "Installing project dependencies with CUDA extra: $CUDA_EXTRA..."
-    INSTALL_CMD="uv pip install -e .[$CUDA_EXTRA]"
+    log_info "Installing project dependencies with CUDA extra: $CUDA_EXTRA (torch $TORCH_PIN)..."
+    INSTALL_CMD="uv pip install -e .[$CUDA_EXTRA] torch==$TORCH_PIN torchaudio==$TORCH_PIN"
 fi
 
 if $INSTALL_CMD; then
@@ -143,8 +150,7 @@ fi
 if [[ "$OSTYPE" != "darwin"* ]]; then
     log_info "Installing flash-attn prebuild wheel for CUDA $CUDA_VERSION + PyTorch $TORCH_VERSION..."
 
-    # Determine Python version
-    PYTHON_VERSION=$(python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+    # Wheel cp tag must match the venv created above (cp311)
     PYTHON_VERSION_NODOT=$(echo "$PYTHON_VERSION" | tr -d '.')
 
     # Construct flash-attn wheel URL

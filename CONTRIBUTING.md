@@ -65,7 +65,7 @@ make test
 ### Environment Setup
 
 **Supported environments:**
-- **Python**: 3.10+
+- **Python**: 3.11+
 - **CUDA**: 12.4 or 12.8 (Linux only)
 - **Platforms**: Linux (recommended), macOS
 

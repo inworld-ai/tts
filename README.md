@@ -1,7 +1,7 @@
 # Inworld Text-To-Speech Trainer
 
 [![Lint Code](https://github.com/inworld-ai/tts/actions/workflows/linter.yaml/badge.svg)](https://github.com/inworld-ai/tts/actions/workflows/linter.yaml)
-[![Python 3.10](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.11](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![CUDA Support](https://img.shields.io/badge/CUDA-12.4%20%7C%2012.8-green.svg)](https://developer.nvidia.com/cuda-toolkit)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.6%20%7C%202.7-orange.svg)](https://pytorch.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -30,7 +30,7 @@ The code is only tested on Ubuntu 22.04.
 
 | Component | Version | Notes |
 |-----------|---------|-------|
-| **Python** | 3.10 | Required for all features |
+| **Python** | 3.11 | Required for all features |
 | **CUDA** | 12.4 or 12.8 | Auto-detected |
 | **PyTorch** | 2.6 (CUDA 12.4) or 2.7 (CUDA 12.8) | Auto-installed |
 
@@ -38,7 +38,7 @@ The code is only tested on Ubuntu 22.04.
 
 ### Prerequisites
 
-This project depends on **Python 3.10** and **uv** for package management.
+This project depends on **Python 3.11** and **uv** for package management.
 
 #### Install uv
 
@@ -67,7 +67,7 @@ make install CUDA_VERSION=12.8
 ```
 
 This automatically:
-* Creates Python 3.10 virtual environment
+* Creates Python 3.11 virtual environment
 * Installs CUDA-optimized PyTorch with the proper [flash attention](https://github.com/Dao-AILab/flash-attention) implementation
 * Sets up all project dependencies
 
