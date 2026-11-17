@@ -17,7 +17,7 @@ You can use this code to pre-train, fine-tune, or align with RL your arbitrary S
 * [Playground](https://inworld.ai/tts)
 * [Examples](https://inworld-ai.github.io/tts/)
 * [TTS-1 Technical Report](tech_reports/Inworld_TTS-1_Technical_Report.pdf) ([arXiv](https://arxiv.org/abs/2507.21138))
-* [TTS-2 Technical Report](tech_reports/Inworld_TTS-2_Technical_Report.pdf)
+* [TTS-2 Technical Report](tech_reports/Inworld_TTS-2_Technical_Report.pdf) (arXiv link coming as soon as arXiv finishes moderating it, which apparently takes longer than conference peer review)
 
 ## TTS Trainer Features
 
